@@ -11,7 +11,7 @@ MapWDI<-function(indicator='NY.GDP.PCAP.KD', nome.indicatore="GDP per capita (co
         map <- plotGoogleMaps(sottoinsieme[,c(nome.indicatore,"COUNTRY","YEAR")],zoom=2,fitBounds=F,filename="Map_GoogleMaps.html",layerName="Economic Data")
 }
 
-# esempi:
+# examples:
 # MapWDI(,,1980,1985)
 
 # MapWDI("MS.MIL.XPND.GD.ZS","Military expenditure (% of GDP)",1996,1997)
