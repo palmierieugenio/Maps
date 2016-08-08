@@ -2,42 +2,17 @@ MapSmallWDI<-function(indicator='NY.GDP.PCAP.KD', nome.indicatore="GDP per capit
         dependencies()
         polygons<-importBorders()
         dati<-importWDI(indicator=indicator,beginning=beginning,ending=ending)
+
+        sottoinsieme<-merge(polygons,dati,by.x="NAME",by.y="country",all=TRUE)
         
-        nomiWB<-dati[,1]
-        nomiMappa<-polygons@data$NAME
-        
-        numero<-NULL
-        for(i in seq_along(nomiWB)){
-                numero<-c(numero,match(nomiWB[i],nomiMappa))
-                numero<-numero[!is.na(numero)]
-        }
-        
-        sottoinsieme<-polygons[numero,]         # SUBSET 1
-        
-        nomi.sotto<-sottoinsieme@data$NAME
-        
-        
-        numeroWB<-NULL
-        for(i in seq_along(nomiMappa)){
-                numeroWB<-c(numeroWB,match(nomiMappa[i],nomiWB))
-                numeroWB<-numeroWB[!is.na(numeroWB)]
-        }
-        
-        dati.ok<-dati[numeroWB,]                # SUBSET 2
-        
-        numero.order<-match(nomi.sotto,dati.ok[,1]) # ORDINA DATI
-        
-        dati.ok<-dati.ok[numero.order,]
-        
-        sottoinsieme@data$country.wd<-dati.ok$country
-        sottoinsieme@data$indice.wd<-dati.ok[,2] # forse problema nome
-        sottoinsieme@data$Year<- dati.ok$year
-        
-        names(sottoinsieme@data)<-c("FIPS","ISO2","ISO3","UN","COUNTRY","AREA","POP2005","REGION","SUBREGION","LON","LAT","country.wd",nome.indicatore, "YEAR")
-        
+        names(sottoinsieme@data)<-c("COUNTRY","FIPS","ISO2","ISO3","UN","AREA","POP2005","REGION","SUBREGION","LON","LAT",nome.indicatore, "YEAR")
+        sottoinsieme<-sottoinsieme[complete.cases(sottoinsieme@data$YEAR),]
         map <- plotGoogleMaps(sottoinsieme[,c(nome.indicatore,"COUNTRY","YEAR")],zoom=2,fitBounds=F,filename="Map_GoogleMaps_small.html",layerName="Economic Data",map="GoogleMap",mapCanvas="Map",map.width="800px",map.height="600px",control.width="200px",control.height="600px")  
 }
 
-MapSmallWDI(,,2011,2012)
+# examples:
+# MapWDI(,,1980,1985)
 
-MapSmallWDI("MS.MIL.XPND.GD.ZS","Military expenditure (% of GDP)",2011,2016)
+# MapWDI("MS.MIL.XPND.GD.ZS","Military expenditure (% of GDP)",1996,1997)
+
+# MapWDI("SL.UEM.1524.FE.ZS","Unemployment, youth female (% of female labor force ages 15-24)",1980,1990)
