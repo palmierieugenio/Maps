@@ -13,7 +13,7 @@
  
 1.	dependecies.R : scarica i pacchetti necessari e li carica;
 2. importWDI.R : importa i dati tramite WDI, l'applicazione della Banca Mondiale;
-3. importborders.R : importa un spatialdataframe coi confini delle nazioni e modifica buona parte dei nomi non combacianti per renderli compatibili con le applicazioni di Google Maps (qualche nome di nazioni minori non l'ho trascritto per ora).
+3. importborders.R : importa un spatialdataframe coi confini delle nazioni e modifica buona parte dei nomi non combacianti per renderli compatibili con le applicazioni di Google Maps (qualche nome di nazioni minori non l'ho trascritto per ora, ma i nomi validi si possono trovare qui: https://developers.google.com/adwords/api/docs/appendix/geotargeting ).
 4. MapWDI.R , MapSmallWDI.R , MapSp.R e GeoChartWDI : richiamano le funzioni precedenti e combinano il database dei confini con quello dei dati, quindi plottano il grafico (in formati diversi).
 
 Il punto 4 differisce per il tipo di visualizzazione, qui degli esempi:
